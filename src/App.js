@@ -9,11 +9,11 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import Home from "./features/pages/Home";
+import Home from "./pages/Home";
 import Products from "./features/Products";
-import Services from "./features/pages/Services";
-import SignIn from "./features/pages/SignIn";
-import SignUp from "./features/pages/SignUp";
+import Services from "./pages/Services";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 import PageNotFound from "./components/PageNotFound";
 
 
