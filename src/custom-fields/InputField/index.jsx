@@ -20,15 +20,21 @@ InputField.defaultProps = {
 };
 
 function InputField(props) {
+  const { field, type, label, placeholder, disabled } = props;
+
+  const {name} = field;
   return (
     <div>
       <FormGroup>
-        <Label for="exampleEmail">Email</Label>
+        {label && <Label for={name}>{label}</Label>}
         <Input
-          type="email"
-          name="email"
-          id="exampleEmail"
-          placeholder="with a placeholder"
+          id={name}
+          {...field}
+
+          type={type}
+          placeholder={placeholder}
+          disabled={disabled}
+          
         />
       </FormGroup>
     </div>
