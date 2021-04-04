@@ -7,7 +7,7 @@ import InputField from "../../../../custom-fields/InputField";
 import SelectField from "../../../../custom-fields/SelectField";
 import { LOCATE_OPTIONS } from "constants/Locate";
 import { CATEGORY_TRAVEL } from "constants/Category";
-import * as Yup from 'yup';
+import * as Yup from "yup";
 // import FileUpLoadField from "custom-fields/FileUpLoadField";
 import InformationField from "custom-fields/InformationField";
 // import ImageField from "custom-fields/ImageField";
@@ -24,29 +24,32 @@ function ProductsAddItems(props) {
   // Khởi tạo giá trị ban đầu cho Formik
   const initialValues = {
     title: "",
-    locateId: null,
-    linkImage: "https://images.unsplash.com/photo-1617298352465-85a0cb27a81d",
+    locatedId: "",
+    linkImage: "",
+    // linkImage: "https://images.unsplash.com/photo-1617298352465-85a0cb27a81d",
     information: "",
-    categoryId: null,
+    categoryId: "",
   };
 
   const validationSchema = Yup.object().shape({
-    title: Yup.string().required('This field is required'),
+    title: Yup.string().required("This field is required"),
 
-    locatedId: Yup.number().required('This field is required'),
+    categoryId: Yup.string().required("This field is required").nullable(),
 
-    categoryId: Yup.number().required('This field is required'),
 
-    information: Yup.string().required('This field is required'),
+    locatedId: Yup.string().required("This field is required").nullable(),
 
-    linkImage: Yup.string().required('This field is required'),
+
+    information: Yup.string().required("This field is required"),
+
+    linkImage: Yup.string().required("This field is required"),
   });
 
   return (
-    <Formik 
+    <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={values => console.log("Submit :",values)}
+      onSubmit={props.onSubmit}
     >
       {(formikProps) => {
         const { values, errors, touched } = formikProps;
@@ -63,19 +66,19 @@ function ProductsAddItems(props) {
             />
 
             <FastField
+              name="locatedId"
+              component={SelectField}
+              label="Locate"
+              placeholder="Fuck off ?"
+              options={LOCATE_OPTIONS}
+            />
+
+            <FastField
               name="categoryId"
               component={SelectField}
               label="Category"
               placeholder="What the fuck are u doing?"
               options={CATEGORY_TRAVEL}
-            />
-
-            <FastField
-              name="locateId"
-              component={SelectField}
-              label="Locate"
-              placeholder="Fuck off ?"
-              options={LOCATE_OPTIONS}
             />
 
             <FastField
@@ -87,7 +90,12 @@ function ProductsAddItems(props) {
             />
 
             <div>
-              <img src={values.linkImage} width="200" height="200" alt="Ảnh lỗi bạn ơi" />
+              <img
+                src={values.linkImage}
+                width="200"
+                height="200"
+                alt="Ảnh lỗi bạn ơi"
+              />
             </div>
 
             <FastField
@@ -97,7 +105,9 @@ function ProductsAddItems(props) {
             />
 
             <FormGroup>
-              <Button type="submit" color="primary">Submit</Button>
+              <Button type="submit" color="primary">
+                Submit
+              </Button>
             </FormGroup>
           </Form>
         );
