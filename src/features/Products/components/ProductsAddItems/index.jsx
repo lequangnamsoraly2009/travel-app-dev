@@ -6,8 +6,11 @@ import { Formik, Form, FastField } from "formik";
 import InputField from "../../../../custom-fields/InputField";
 import SelectField from "../../../../custom-fields/SelectField";
 import { LOCATE_OPTIONS } from "constants/Locate";
-import FileUpLoadField from "custom-fields/FileUpLoadField";
+import { CATEGORY_TRAVEL } from "constants/Category";
+import * as Yup from 'yup';
+// import FileUpLoadField from "custom-fields/FileUpLoadField";
 import InformationField from "custom-fields/InformationField";
+// import ImageField from "custom-fields/ImageField";
 
 ProductsAddItems.propTypes = {
   onSubmit: PropTypes.func,
@@ -22,15 +25,33 @@ function ProductsAddItems(props) {
   const initialValues = {
     title: "",
     locateId: null,
-    fileUpload: "",
-    information:'',
+    linkImage: "https://images.unsplash.com/photo-1617298352465-85a0cb27a81d",
+    information: "",
+    categoryId: null,
   };
 
+  const validationSchema = Yup.object().shape({
+    title: Yup.string().required('This field is required'),
+
+    locatedId: Yup.number().required('This field is required'),
+
+    categoryId: Yup.number().required('This field is required'),
+
+    information: Yup.string().required('This field is required'),
+
+    linkImage: Yup.string().required('This field is required'),
+  });
+
   return (
-    <Formik initialValues={initialValues}>
+    <Formik 
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={values => console.log("Submit :",values)}
+    >
       {(formikProps) => {
         const { values, errors, touched } = formikProps;
         console.log({ values, errors, touched });
+
         // .....
         return (
           <Form>
@@ -42,6 +63,14 @@ function ProductsAddItems(props) {
             />
 
             <FastField
+              name="categoryId"
+              component={SelectField}
+              label="Category"
+              placeholder="What the fuck are u doing?"
+              options={CATEGORY_TRAVEL}
+            />
+
+            <FastField
               name="locateId"
               component={SelectField}
               label="Locate"
@@ -50,10 +79,16 @@ function ProductsAddItems(props) {
             />
 
             <FastField
-              name="fileUpload"
-              component={FileUpLoadField}
-              label="File Upload"
+              name="linkImage"
+              // component={FileUpLoadField}
+              component={InputField}
+              label="Link Image"
+              placeholder="https://images.unsplash.com/photo-1617298352465-85a0cb27a81d"
             />
+
+            <div>
+              <img src={values.linkImage} width="200" height="200" alt="Ảnh lỗi bạn ơi" />
+            </div>
 
             <FastField
               name="information"
@@ -62,7 +97,7 @@ function ProductsAddItems(props) {
             />
 
             <FormGroup>
-              <Button color="primary">Submit</Button>
+              <Button type="submit" color="primary">Submit</Button>
             </FormGroup>
           </Form>
         );
