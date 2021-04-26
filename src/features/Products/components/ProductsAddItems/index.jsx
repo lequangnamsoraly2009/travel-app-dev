@@ -22,14 +22,7 @@ ProductsAddItems.defaultProps = {
 
 function ProductsAddItems(props) {
   // Khởi tạo giá trị ban đầu cho Formik
-  const initialValues = {
-    title: "",
-    locatedId: "",
-    linkImage: "",
-    // linkImage: "https://images.unsplash.com/photo-1617298352465-85a0cb27a81d",
-    information: "",
-    categoryId: "",
-  };
+  const {initialValues} =props;
 
   const validationSchema = Yup.object().shape({
     title: Yup.string().required("This field is required"),
@@ -44,6 +37,7 @@ function ProductsAddItems(props) {
 
     linkImage: Yup.string().required("This field is required"),
   });
+
 
   return (
     <Formik

@@ -15,7 +15,7 @@ function Products(props) {
       <Route exact path={match.url} component={MainProducts} />
 
       <Route path={`${match.url}/add`} component={AddProductItems} />
-
+      <Route path={`${match.url}/:productId`} component={AddProductItems} />
       <Route component={PageNotFound} />
     </Switch>
   );

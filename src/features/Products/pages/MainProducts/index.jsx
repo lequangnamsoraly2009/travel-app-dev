@@ -1,10 +1,11 @@
 import React from "react";
 import { Container } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import "./mainProducts.scss";
-import { useDispatch, useSelector } from "react-redux";
+import {  useDispatch, useSelector } from "react-redux";
 import ProductList from "features/Products/components/ProductList";
-import { useHistory } from 'react-router';
+import { removeProduct } from "features/Products/productSlice";
+// import { useHistory } from 'react-router';
 
 MainProducts.propTypes = {};
 
@@ -19,6 +20,18 @@ function MainProducts(props) {
   //   const editPhotoUrl = `/photos/${photo.id}`;
   //   history.push(editPhotoUrl);
   // }
+  const handleProductEditClick = (product) => {
+    console.log("Edit:",product);
+    const editProductUrl = `/products/${product.id}`;
+    history.push(editProductUrl); // redirect về URL cần edit
+  }
+
+  const handleProductRemoveClick = (product) => {
+    console.log("Remove:",product);
+    const removeProductId = product.id;
+    const action = removeProduct(removeProductId);
+    dispatch(action);
+  }
 
   // const handlePhotoRemoveClick = (photo) => {
   //   console.log('Remove: ', photo);
@@ -32,8 +45,8 @@ function MainProducts(props) {
           <Link className="product-main__add" to="/products/add">Add new products</Link> 
           <ProductList
           productList={products}
-          // onPhotoEditClick={handlePhotoEditClick}
-          // onPhotoRemoveClick={handlePhotoRemoveClick}
+          onProductEditClick={handleProductEditClick}
+          onProductRemoveClick={handleProductRemoveClick}
         />
       </Container>
     </div>
